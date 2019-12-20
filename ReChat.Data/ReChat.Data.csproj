@@ -5,12 +5,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interface\" />
-    <Folder Include="UoW\" />
-    <Folder Include="Repository\" />
+    <Compile Remove="Migrations\20191213190708_PhotoMigration.cs" />
+    <Compile Remove="Migrations\20191213190708_PhotoMigration.Designer.cs" />
+    <Compile Remove="Migrations\20191213190905_PhotoMigration.cs" />
+    <Compile Remove="Migrations\20191213190905_PhotoMigration.Designer.cs" />
+    <Compile Remove="Migrations\20191213191210_ModifiedUserMigration.cs" />
+    <Compile Remove="Migrations\20191213191210_ModifiedUserMigration.Designer.cs" />
+    <Compile Remove="Migrations\20191213191330_ModifiedUserMigration.cs" />
+    <Compile Remove="Migrations\20191213191330_ModifiedUserMigration.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Repository\" />
+    <Folder Include="UoW\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.0.1">
       <PrivateAssets>all</PrivateAssets>
@@ -22,6 +33,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
