@@ -5,6 +5,12 @@ import { Observable } from 'rxjs';
 import { User } from '../_models/user';
 import { map } from 'rxjs/operators';
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    Authorization: 'Bearer' + localStorage.getItem('token')
+  })
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,4 +19,5 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
+ 
 }

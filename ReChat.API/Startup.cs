@@ -20,6 +20,10 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using AutoMapper;
 using ReChat.API.Extensions;
+using ReChat.Data.Repository;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace ReChat.API
 {
@@ -88,8 +92,6 @@ namespace ReChat.API
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
-            //services.AddScoped<IAuthRepository, AuthRepository>();
-
             services.AddCors(options =>
             {
                 options.AddPolicy(MyAllowSpecificOrigins,
@@ -103,6 +105,8 @@ namespace ReChat.API
             });
             services.AddAutoMapper(typeof(AutoMapperProfiles));
             services.AddControllers();
+            services.AddScoped<IRechatRepository, RechatRepository>();
+            services.AddScoped<LogActivity>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -118,6 +122,10 @@ namespace ReChat.API
             app.UseAuthorization();
 
             app.UseAuthentication();
+
+            app.UseDefaultFiles();
+
+            app.UseStaticFiles();
 
             app.UseCors(MyAllowSpecificOrigins);
 
