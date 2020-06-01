@@ -18,6 +18,4 @@ export class UserService {
   baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
-
- 
 }
