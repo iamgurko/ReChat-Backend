@@ -16,7 +16,7 @@ import {
 } from 'ngx-bootstrap';
 import { RouterModule } from '@angular/router';
 import { JwtModule } from '@auth0/angular-jwt';
-
+import { AlertifyService} from './_services/alertify.service';
 import { AppComponent } from './app.component';
 import { NavComponent } from './nav/nav.component';
 import { HomeComponent } from './home/home.component';
@@ -65,6 +65,7 @@ export class CustomHammerConfig extends HammerGestureConfig {
   ],
   providers: [
     ErrorInterceptorProvider,
+    AlertifyService,
     { provide: HAMMER_GESTURE_CONFIG, useClass: CustomHammerConfig }
   ],
   bootstrap: [AppComponent]

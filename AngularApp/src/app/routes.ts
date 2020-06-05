@@ -1,6 +1,9 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthGuard } from './_guards/auth.guard';
+import { MemberListComponent } from './member-list/member-list.component';
+import { MessagesComponent } from './messages/messages.component';
+import { ListsComponent } from './lists/lists.component';
 
 
 export const appRoutes: Routes = [
@@ -10,8 +13,10 @@ export const appRoutes: Routes = [
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard],
     children: [
-
-    ]
+       { path: 'members', component: MemberListComponent, canActivate: [AuthGuard] },
+       { path: 'messages', component: MessagesComponent },
+       { path: 'lists', component: ListsComponent },
+    ],
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' }
+  { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ];

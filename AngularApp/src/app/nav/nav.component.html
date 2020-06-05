@@ -3,7 +3,13 @@
     <a class="navbar-brand" [routerLink]="['/home']">AngularApp</a>
     <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link">Link</a>
+        <a class="nav-link" [routerLink]="['/members']">Eşleşmeler</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/lists']">Lists</a>
+      </li>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/messages']">Messages</a>
       </li>
     </ul>
 
@@ -12,9 +18,16 @@
             <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
           </span>
       <a class="dropdown-toggle text-light" dropdownToggle>
-        Hoşgeldin {{ authService.decodedToken?.unique_name | titlecase }}
+        Merhaba {{ authService.decodedToken?.unique_name | titlecase }}
       </a>
-
+      <ul id="dropdown-menu" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
+        <li role="menuitem"><a class="dropdown-item" >
+          <i class="fa fa-user"></i>
+          Profili Düzenle</a></li>
+        <li role="menuitem"><a class="dropdown-item" (click)="logout()">
+          <i class="fa fa-sign-out"></i>
+          Çıkış</a></li>
+      </ul>
     </div>
 
     <form
