@@ -35,8 +35,4 @@
     <ProjectReference Include="..\ReChat.Domain\ReChat.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Seed\" />
-  </ItemGroup>
-
 </Project>

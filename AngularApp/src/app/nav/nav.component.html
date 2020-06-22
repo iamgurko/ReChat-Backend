@@ -21,7 +21,7 @@
         Merhaba {{ authService.decodedToken?.unique_name | titlecase }}
       </a>
       <ul id="dropdown-menu" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-animated">
-        <li role="menuitem"><a class="dropdown-item" >
+        <li role="menuitem"><a class="dropdown-item" [routerLink]="['/member/edit']">
           <i class="fa fa-user"></i>
           Profili Düzenle</a></li>
         <li role="menuitem"><a class="dropdown-item" (click)="logout()">

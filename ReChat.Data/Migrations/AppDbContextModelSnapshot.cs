@@ -15,7 +15,7 @@ namespace ReChat.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.1")
+                .HasAnnotation("ProductVersion", "3.1.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -103,6 +103,61 @@ namespace ReChat.Data.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("ReChat.Domain.Models.Like", b =>
+                {
+                    b.Property<int>("LikerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LikerId", "LikeeId");
+
+                    b.HasIndex("LikeeId");
+
+                    b.ToTable("Likes");
+                });
+
+            modelBuilder.Entity("ReChat.Domain.Models.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateRead")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("MessageSent")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("RecipientDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RecipientId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SenderDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("SenderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RecipientId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
                 });
 
             modelBuilder.Entity("ReChat.Domain.Models.Photo", b =>
@@ -329,6 +384,36 @@ namespace ReChat.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ReChat.Domain.Models.Like", b =>
+                {
+                    b.HasOne("ReChat.Domain.Models.User", "Likee")
+                        .WithMany("Likers")
+                        .HasForeignKey("LikeeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ReChat.Domain.Models.User", "Liker")
+                        .WithMany("Likees")
+                        .HasForeignKey("LikerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ReChat.Domain.Models.Message", b =>
+                {
+                    b.HasOne("ReChat.Domain.Models.User", "Recipient")
+                        .WithMany("MessagesReceived")
+                        .HasForeignKey("RecipientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ReChat.Domain.Models.User", "Sender")
+                        .WithMany("MessagesSent")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 

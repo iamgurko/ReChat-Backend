@@ -51,7 +51,7 @@ namespace ReChat.Data.Repository
 
         public async Task<User> GetUser(int id, bool isCurrentUser)
         {
-            var query = _context.Users.AsQueryable();
+            var query = _context.Users.Include(p => p.Photos).AsQueryable();
 
             if (isCurrentUser)
                 query = query.IgnoreQueryFilters();
@@ -166,6 +166,8 @@ namespace ReChat.Data.Repository
 
             return messages;
         }
+
+       
     }
 }
 

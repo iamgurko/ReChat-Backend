@@ -1,0 +1,58 @@
+<div class="container mt-4">
+  <div class="row">
+    <h1>{{user.knownAs}} Profil</h1>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="card">
+          <img class="card-img-top img-thumbnail" src="{{user.photoUrl || '../../../assets/user.png'}}" alt="{{user.knownAs}}">
+        <div class="card-body">
+          <div>
+            <strong>Konum</strong>
+            <p>{{user.city}}, {{user?.country}}</p>
+          </div>
+          <div>
+            <strong>Yaş</strong>
+            <p>{{user.age}}</p>
+          </div>
+          <div>
+            <strong>En Son Görülme</strong>
+            <p>{{user.lastActive | timeAgo}}</p>
+          </div>
+          <div>
+            <strong>Üyelik Zamanı</strong>
+            <p>{{user.created | date: 'mediumDate'}}</p>
+          </div>
+        </div>
+        <div class="card-footer">
+          <div class="btn-group d-flex">
+            <button class="btn btn-primary w-100">Beğen</button>
+            <button class="btn btn-success w-100" (click)="selectTab(3)">Mesajlaş</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="tab-panel">
+        <tabset class="member-tabset" #memberTabs>
+          <tab heading="About {{user.knownAs}}">
+            <h4>Açıklama</h4>
+            <p>{{user.introduction}}</p>
+            <h4>Bakındığı</h4>
+            <p>{{user.lookingFor}}</p>
+          </tab>
+          <tab heading="Interests">
+            <h4>İlgi Alanları</h4>
+            <p>{{user.interests}}</p>
+          </tab>
+          <tab heading="Fotoğraf">
+            <ngx-gallery [options]="galleryOptions" [images]="galleryImages"></ngx-gallery>
+          </tab>
+          <tab heading="Mesaj">
+              <app-member-messages [recipientId]="user.id"></app-member-messages>
+          </tab>
+        </tabset>
+      </div>
+    </div>
+  </div>
+</div>

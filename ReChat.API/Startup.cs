@@ -42,7 +42,11 @@ namespace ReChat.API
         {
 
             //services.AddDbContext<AppDbContext>(ServiceLifetime.Transient);
-            services.AddDbContext<AppDbContext>(x => x.UseSqlServer(Configuration.GetConnectionString("AppDbConnection")));
+            services.AddDbContext<AppDbContext>(x =>
+            {
+                x.UseLazyLoadingProxies();
+                x.UseSqlServer(Configuration.GetConnectionString("AppDbConnection"));
+            });
 
             IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
             {
@@ -99,6 +103,7 @@ namespace ReChat.API
                     builder.WithOrigins("http://localhost:4200",
                                         "http://localhost")
                                          .AllowAnyHeader()
+                                         .AllowAnyOrigin()
                                          .AllowAnyMethod();
                 });
             });
@@ -134,9 +139,11 @@ namespace ReChat.API
 
             app.UseRouting();
 
-            app.UseAuthorization();
-
+            app.UseCors(MyAllowSpecificOrigins);
+            
             app.UseAuthentication();
+
+            app.UseAuthorization();
 
             app.UseDefaultFiles();
 

@@ -13,7 +13,7 @@ namespace ReChat.Data.Extensions
     {
         public static void SeedUsers(UserManager<User> userManager)
         {
-            if (userManager.Users.Any())
+            if (!userManager.Users.Any())
             {
                 var userData = System.IO.File.ReadAllText("Extensions/SeedData.json");
                 var users = JsonConvert.DeserializeObject<List<User>>(userData);

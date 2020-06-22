@@ -1,0 +1,112 @@
+<div class="row">
+  <div class="col-sm-2" *ngFor="let photo of photos">
+    <img src="{{ photo.url }}" class="img-thumbnail p-1" alt="" />
+    <div class="text-center">
+      <button
+        type="button"
+        [ngClass]="photo.isMain ? 'btn-success active' : 'btn-secondary'"
+        (click)="setMainPhoto(photo)"
+        [disabled]="photo.isMain"
+        class="btn btn-sm mr-1"
+      >
+        Main
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-sm"
+        [disabled]="photo.isMain"
+        (click)="deletePhoto(photo.id)"
+      >
+        <i class="fa fa-trash-o"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-md-3">
+    <h3>Fotograf Ekle</h3>
+
+    <div
+      ng2FileDrop
+      [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+      (fileOver)="fileOverBase($event)"
+      [uploader]="uploader"
+      class="card bg-faded p-3 text-center mb-3 my-drop-zone"
+    >
+      <i class="fa fa-upload fa-3x"></i>
+      Fotografları buraya sürükleyebilirsin
+    </div>
+
+    Multiple
+    <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+
+    Single
+    <input type="file" ng2FileSelect [uploader]="uploader" />
+  </div>
+
+  <div
+    class="col-md-9"
+    style="margin-bottom: 40px"
+    *ngIf="uploader?.queue?.length"
+  >
+    <h3>Yükleme Kuyruğu</h3>
+    <p>Yükleme Sırası: {{ uploader?.queue?.length }}</p>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th width="50%">Foto Adı</th>
+          <th>Büyüklük</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of uploader.queue">
+          <td>
+            <strong>{{ item?.file?.name }}</strong>
+          </td>
+          <td *ngIf="uploader.options.isHTML5" nowrap>
+            {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div>
+      <div>
+        Yükleme İşleyişi:
+        <div class="progress mb-4">
+          <div
+            class="progress-bar"
+            role="progressbar"
+            [ngStyle]="{ width: uploader.progress + '%' }"
+          ></div>
+        </div>
+      </div>
+      <button
+        type="button"
+        class="btn btn-success btn-s"
+        (click)="uploader.uploadAll()"
+        [disabled]="!uploader.getNotUploadedItems().length"
+      >
+        <span class="fa fa-upload"></span> Yükle
+      </button>
+      <button
+        type="button"
+        class="btn btn-warning btn-s"
+        (click)="uploader.cancelAll()"
+        [disabled]="!uploader.isUploading"
+      >
+        <span class="fa fa-ban"></span> İptal
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-s"
+        (click)="uploader.clearQueue()"
+        [disabled]="!uploader.queue.length"
+      >
+        <span class="fa fa-trash"></span> Sil
+      </button>
+    </div>
+  </div>
+</div>

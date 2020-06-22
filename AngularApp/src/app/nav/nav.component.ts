@@ -25,7 +25,7 @@ export class NavComponent implements OnInit {
   login() {
     this.authService.login(this.model).subscribe(
       next => {
-        this.alertify.success('Başarılı Giriş');
+        this.alertify.success('Giriş Başarılı');
       },
       error => {
         this.alertify.error(error);
@@ -45,7 +45,7 @@ export class NavComponent implements OnInit {
     localStorage.removeItem('user');
     this.authService.decodedToken = null;
     this.authService.currentUser = null;
-    this.alertify.message('Çıkış Yapılıyor..');
+    this.alertify.message('Çıkış Yapıldı');
     this.router.navigate(['/home']);
   }
 }

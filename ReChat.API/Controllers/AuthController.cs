@@ -42,11 +42,11 @@ namespace ReChat.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register(UserRegisterDto userRegisterDto)
         {
-            var userToCreate = _mapper.Map<User>(userRegisterDto);
+            var userCreate = _mapper.Map<User>(userRegisterDto);
 
-            var result = await _userManager.CreateAsync(userToCreate, userRegisterDto.Password);
+            var result = await _userManager.CreateAsync(userCreate, userRegisterDto.Password);
 
-            var userToReturn = _mapper.Map<UserDetailDto>(userToCreate);
+            var userReturn = _mapper.Map<UserDetailDto>(userCreate);
 
             if (result.Succeeded)
             {
@@ -67,15 +67,12 @@ namespace ReChat.API.Controllers
 
             if (result.Succeeded)
             {
-                var appUser = await _userManager.Users.Include(p => p.Photos)
-                    .FirstOrDefaultAsync(u => u.NormalizedUserName == userLoginDto.UserName.ToUpper());
-
-                var userToReturn = _mapper.Map<UserListDto>(appUser);
+                var appUser = _mapper.Map<UserListDto>(user);
 
                 return Ok(new
                 {
-                    token = GenerateJwtToken(appUser).Result,
-                    user = userToReturn
+                    token = GenerateJwtToken(user).Result,
+                    user = appUser
                 });
             }
 

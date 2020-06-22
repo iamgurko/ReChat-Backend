@@ -12,9 +12,27 @@ namespace ReChat.API.Extensions
     {
         public AutoMapperProfiles()
         {
-            CreateMap<User, UserListDto>();
-            CreateMap<User, UserDetailDto>();
-            CreateMap<UserRegisterDto,User >();
+            CreateMap<User, UserListDto>()
+                .ForMember(dest => dest.PhotoUrl, opt =>
+                {
+                    opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url);
+                })
+                .ForMember(dest => dest.Age, opt =>
+                {
+                    opt.MapFrom(d => d.DateOfBirth.CalculateAge());
+                });
+            CreateMap<User, UserDetailDto>()
+                .ForMember(dest => dest.PhotoUrl, opt =>
+                {
+                    opt.MapFrom(src => src.Photos.FirstOrDefault(p => p.IsMain).Url);
+                })
+                .ForMember(dest => dest.Age, opt =>
+                {
+                    opt.MapFrom(d => d.DateOfBirth.CalculateAge());
+                });
+            CreateMap<Photo, PhotoDetailDto>();
+            CreateMap<UserRegisterDto,User>();
+            CreateMap<UserUpdateDto, User>();
         }
     }
 }
